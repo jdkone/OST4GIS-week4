@@ -33,16 +33,29 @@
 ===================== */
 
 // Use the data source URL from lab 1 in this 'ajax' function:
-var downloadData = $.ajax("http://");
+
+var downloadData = $.ajax('https://raw.githubusercontent.com/CPLN-692-401/datasets/master/json/philadelphia-solar-installations.json');
+
 
 // Write a function to prepare your data (clean it up, organize it as you like, create fields, etc)
-var parseData = function() {};
+//var cleaned = JSON.parse(downlaodData.responseText);
+
+var parseData = function(array) {
+  var cleaned = JSON.parse(String(array));
+  return _.map(cleaned, function(object) {
+      return _.omit(object, "NOTES");
+  });
+};
 
 // Write a function to use your parsed data to create a bunch of marker objects (don't plot them!)
-var makeMarkers = function() {};
+var makeMarkers = function(array) {
+  _.forEach(array, function(object) {
+    L.marker(object.LAT, object.LONG_);
+  });
+};
 
 // Now we need a function that takes this collection of markers and puts them on the map
-var plotMarkers = function() {};
+var plotMarkers = function(makeMarkers) { map.addLayer(makeMarkers); };
 
 // At this point you should see a bunch of markers on your map.
 // Don't continue on until you can make them appear!
@@ -94,6 +107,7 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 downloadData.done(function(data) {
   var parsed = parseData(data);
   var markers = makeMarkers(parsed);
-  plotMarkers(markers);
-  removeMarkers(markers);
+console.log(markers);
+  //plotMarkers(markers);
+  //removeMarkers(markers);
 });

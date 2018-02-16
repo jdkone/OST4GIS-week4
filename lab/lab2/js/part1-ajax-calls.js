@@ -4,8 +4,10 @@
 
 
 
-
-
+var data = $.ajax('https://raw.githubusercontent.com/CPLN-692-401/datasets/master/json/philadelphia-solar-installations.json');
+var placeholder;
+data.then(function(response) {placeholder = (JSON.parse(response));});
+console.log(placeholder);
 
 
 
@@ -21,5 +23,4 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
   ext: 'png'
 }).addTo(map);
 
-// L.terminator().addTo(map)
-
+L.terminator().addTo(map);
